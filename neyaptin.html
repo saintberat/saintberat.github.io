@@ -137,13 +137,13 @@ p {
   <div id="sayac">tiklama sayisi: 0</div>
 
   <br><br>
-  <a href="index.html">
+  <a href="superdupermupertanitimsitesi.html">
     <button class="btn btn-danger mt-3">buradan kac</button>
   </a>
 </div>
 
 <script>
-// fare takibi
+
 document.addEventListener('mousemove', function(e) {
   document.querySelectorAll('.goz').forEach(goz => {
     const pupil = goz.querySelector('.pupil');
@@ -156,7 +156,7 @@ document.addEventListener('mousemove', function(e) {
   });
 });
 
-// korkutma
+
 const flash = document.getElementById('flash');
 const mesajlar = [
   'tiklamaya devam edersen sonuclari sen bilirsin',
@@ -166,7 +166,7 @@ const mesajlar = [
   'neden dinlemiyorsun',
   'tamam artik gercekten kiziyorum',
   'son uyarim bu',
-  'pismayacaksin dimi',
+  'bikmayacaksin dimi',
   'TAMAM OLDU',
   'artik sen bilirsin. kac buradan.',
 ];
@@ -177,23 +177,23 @@ function korkut() {
   sayac++;
   document.getElementById('sayac').innerText = 'tiklama sayisi: ' + sayac;
 
-  // kırmızı flash
+  
   flash.style.opacity = '0.85';
   setTimeout(() => { flash.style.opacity = '0.5'; }, 80);
   setTimeout(() => { flash.style.opacity = '0.85'; }, 160);
   setTimeout(() => { flash.style.opacity = '0'; }, 350);
 
-  // shake
+
   document.body.classList.remove('shake');
   void document.body.offsetWidth;
   document.body.classList.add('shake');
   setTimeout(() => document.body.classList.remove('shake'), 400);
 
-  // mesaj
+
   const m = document.getElementById('mesaj');
   m.innerText = mesajlar[Math.min(sayac - 1, mesajlar.length - 1)];
 
-  // ekstra kaos 5. tiklamadan sonra
+ 
   if (sayac >= 5) {
     document.querySelector('h1').style.color = sayac % 2 === 0 ? 'red' : 'white';
   }
