@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hassiktirfenasiteymis</title>
+
+<audio id="flashSound" src="sounds/flashbang-gah-dayum.mp3"></audio>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+#flash{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:9999;
+transition:opacity 0.1s;
+}
+
+body{
+background:#0d0d0d;
+color:white;
+text-align:center;
+font-family:Comic Sans MS;
+overflow-x:hidden;
+}
+
+.container{
+margin-top:70px;
+}
+
+.foto{
+width:150px;
+transition:0.3s;
+margin-bottom:20px;
+}
+
+.foto:hover{
+transform:scale(1.1)
+}
+
+.meme{
+width:180px;
+margin-top:20px;
+transition:0.3s;
+}
+
+.meme:hover{
+transform:scale(1.1);
+}
+
+.bilgiKutusu{
+margin-top:25px;
+padding:15px;
+background:#1c1c1c;
+border-radius:10px;
+min-height:60px;
+font-size:18px;
+}
+
+.butonPanel{
+margin-top:20px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+}
+
+.kedi{
+position:fixed;
+top:-100px;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+top:110vh;
+}
+}
+
+@keyframes shake{
+0%{transform:translate(0,0)}
+25%{transform:translate(5px,5px)}
+50%{transform:translate(-5px,5px)}
+75%{transform:translate(5px,-5px)}
+100%{transform:translate(0,0)}
+}
+
+.shake{
+animation:shake 0.5s;
+}
+
+#startScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+color:white;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-size:28px;
+z-index:9999;
+cursor:pointer;
+}
+
+#dvdCat{
+  position:fixed;
+  left:100px;
+  top:100px;
+}
+
+#eyes{
+position:fixed;
+bottom:20px;
+right:20px;
+display:flex;
+gap:10px;
+}
+
+.eye{
+width:40px;
+height:40px;
+background:white;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.pupil{
+width:15px;
+height:15px;
+background:black;
+border-radius:50%;
+}
+
+/* =====================
+   YORUM BÖLÜMÜ STİLLERİ
+===================== */
+
+.yorum-bolumu {
+  margin: 60px auto;
+  max-width: 800px;
+  padding: 30px;
+  background: #1a1a1a;
+  border-radius: 16px;
+  border: 1px solid #333;
+  text-align: left;
+}
+
+.yorum-bolumu h2 {
+  text-align: center;
+  font-family: Comic Sans MS;
+  color: #ffc107;
+  margin-bottom: 10px;
+}
+
+.yorum-bolumu p.aciklama {
+  text-align: center;
+  color: #aaa;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Utterances iframe'ini karanlık temaya uyarla */
+.utterances {
+  max-width: 100% !important;
+}
+
+</style>
+</head>
+
+<body>
+<div id="flash"></div>
+
+<!-- açılış ekranı -->
+<div id="startScreen">
+<h1>siteye hosgeldin</h1>
+<p>lutfen sacma butonlara tikla ve dvd kediye dikkat et</p>
+<p>(devam etmek icin herhangi bir yere bas)</p>
+</div>
+
+<div class="container">
+
+<div class="row align-items-center">
+
+<div class="col-md-3">
+<img class="foto" src="https://i.pinimg.com/originals/2b/aa/9d/2baa9dd50684e606126a7e750eddac7d.jpg" width="200px" height="200px">
+</div>
+
+<div class="col-md-6">
+
+<h1>pis sapık insan. neyse hosgeldin</h1>
+
+<img src="https://media.tenor.com/ht3_RbOnZ78AAAAm/blue-emoji.webp" width="200">
+
+<h1 class="mt-4">ben berat</h1>
+
+<p>
+<h3>bu siteyi kendimi tanitmak icin yaptim (birazda can sikintisi)</h3><br>
+• bazen yazilimla ugrasirim<br>
+• bazen yazilim benle ugrasir <br>
+• siber guvenlikle ilgileniyorum <br>
+• cesit cesit oyunlar oynarim <br>
+• hayvanlari severim <br>
+• tanismak istersen mesaj atabilirsin <br>
+ <br>
+<h5>ve lutfen sitemdeki sacma butonlara tikla</h5>  <br> <br>
+</p>
+
+<p>
+    <h4 style="text-align: center;">
+        iste bildigim yazilim dilleri
+    </h4> <br>
+
+ • HTML/CSS/JS <br>
+ • C#<br>
+ • Arduino JS
+</p>
+
+<img class="meme" src="https://media.tenor.com/8BvIvPhOJDYAAAAm/doink.webp">
+
+<div class="butonPanel">
+
+<button class="btn btn-warning" onclick="rastgeleBilgi()">rastgele bilgi</button>
+
+<button class="btn btn-success" onclick="kediYagdir()">kedi yağmuru</button>
+
+<button class="btn btn-info" onclick="kediSpawn()">ekrana kedi at</button>
+
+<button class="btn btn-danger" onclick="ekraniSalla()">ekrani salla</button>
+
+<button class="btn btn-dark" onclick="bonk()">BONK</button>
+
+<a href="index.html">
+<button class="btn btn-light">geri dön yoksa kaybolursun</button>
+</a>
+
+</div>
+
+<div id="bilgi" class="bilgiKutusu">
+burada rastgele mesajlar görünecek
+</div>
+
+</div>
+
+<div class="col-md-3">
+<img class="foto" src="https://i.imgflip.com/6gie1w.jpg" width="200" height="200">
+</div>
+
+</div>
+
+</div>
+
+
+     YORUM BÖLÜMÜ
+     
+     KURULUM:
+     1. https://utteranc.es adresine git
+     2. "utterances" GitHub App'ini kendi repo'na yükle
+     3. Aşağıdaki repo="..." kısmını kendi GitHub kullanıcı adın ve
+        repo adınla değiştir. Örnek: repo="beratyildiz/benim-sitem"
+     
+     GitHub hesabı olan herkes yorum yapabilir.
+     Yorumlar GitHub Issues olarak kaydedilir, tamamen ücretsiz!
+
+
+<div class="yorum-bolumu">
+  <h2>💬 yorumlar</h2>
+  <p class="aciklama">
+    yorum yapmak için github hesabı gerekiyor<br>
+    (yoksa ücretsiz aç, 2 dakika sürer)
+  </p>
+
+  <script src="https://utteranc.es/client.js"
+        repo="BURAYA_GITHUB_KULLANICI_ADIN/BURAYA_REPO_ADIN"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+  </script>
+</div>
+
+<!-- DVD kedi -->
+<img id="dvdCat" src="https://media.tenor.com/1W-HKNvj8UoAAAAM/cat.gif" width="100">
+
+<!-- gözler -->
+<div id="eyes">
+<div class="eye"><div class="pupil"></div></div>
+<div class="eye"><div class="pupil"></div></div>
+</div>
+
+<!-- bonk sesi -->
+<audio id="bonkSound" src="https://www.myinstants.com/media/sounds/bonk.mp3"></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+const dvd = document.getElementById("dvdCat");
+const flash = document.getElementById("flash");
+const startScreen = document.getElementById("startScreen");
+
+document.addEventListener("mousemove", function(event){
+    const eyes = document.querySelectorAll(".eye");
+    
+    eyes.forEach(eye => {
+        const pupil = eye.querySelector(".pupil");
+        const rect = eye.getBoundingClientRect();
+
+        const eyeCenterX = rect.left + rect.width / 2;
+        const eyeCenterY = rect.top + rect.height / 2;
+
+        const dx = event.clientX - eyeCenterX;
+        const dy = event.clientY - eyeCenterY;
+
+        const angle = Math.atan2(dy, dx);
+        const radius = 10;
+
+        const pupilX = Math.cos(angle) * radius;
+        const pupilY = Math.sin(angle) * radius;
+
+        pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+    });
+});
+
+if(startScreen){
+startScreen.addEventListener("click",function(){
+this.style.display="none";
+});
+}
+
+function flashEkran(){
+    if(!flash) return;
+
+    flash.style.transition = "none";
+    flash.style.opacity = "1";
+
+    const sound = document.getElementById("flashSound");
+    if(sound){
+        sound.currentTime = 0;
+        sound.play();
+    }
+
+    setTimeout(()=>{
+        flash.style.transition = "opacity 1s";
+        flash.style.opacity = "0";
+    }, 2500);
+}
+
+dvd.addEventListener("mouseenter", flashEkran);
+
+if(dvd){
+dvd.addEventListener("mouseenter",flashEkran);
+}
+
+window.rastgeleBilgi = function(){
+
+const bilgiler = [
+"duvarlarinin icindeyim",
+"gercekten bunu deniyor musun",
+"mezopotamya tasak patlatma oyunu MÖ 3000 yilinda ortaya cikmistir",
+"bu site bilimsel olarak sacmadir",
+"kediler interneti yonetiyor",
+"penci zorno"
+];
+
+document.getElementById("bilgi").innerText =
+bilgiler[Math.floor(Math.random()*bilgiler.length)];
+
+}
+
+window.kediYagdir = function(){
+
+for(let i=0;i<15;i++){
+
+let kedi = document.createElement("img");
+
+kedi.src = "https://preview.redd.it/random-question-but-does-anyone-have-versions-of-this-cat-v0-ya8qikz9kn0f1.png?width=640&crop=smart&auto=webp&s=2487b53aa5d4ac4e710f7717a6850c83562272ab";
+
+kedi.style.position = "fixed";
+kedi.style.top = "-100px";
+kedi.style.left = Math.random()*100 + "vw";
+kedi.style.width = "80px";
+kedi.style.zIndex = "999";
+
+kedi.style.animation = "fall 4s linear forwards";
+
+document.body.appendChild(kedi);
+
+setTimeout(()=>kedi.remove(),4000);
+
+}
+
+}
+
+window.kediSpawn = function(){
+
+let kedi = document.createElement("img");
+
+kedi.src = "https://preview.redd.it/post-the-best-cat-memes-you-got-in-the-comments-please-v0-kg82lbnu0ste1.png?auto=webp&s=e6f9eee86484f5de3f4e31f3c33b2d07fb982bd5";
+
+kedi.style.position = "fixed";
+kedi.style.left = Math.random()*90 + "vw";
+kedi.style.top = Math.random()*90 + "vh";
+kedi.style.width = "120px";
+kedi.style.zIndex = "999";
+
+document.body.appendChild(kedi);
+
+}
+
+window.ekraniSalla = function(){
+
+document.body.classList.add("shake");
+
+setTimeout(()=>{
+document.body.classList.remove("shake");
+},500);
+
+}
+
+window.bonk = function(){
+
+const sound = document.getElementById("bonkSound");
+if(sound) sound.play();
+
+}
+
+let x = 100;
+let y = 100;
+let dx = 2;
+let dy = 2;
+
+function moveCat(){
+
+if(!dvd) return;
+
+x += dx;
+y += dy;
+
+if(x + 100 > window.innerWidth || x < 0) dx = -dx;
+if(y + 100 > window.innerHeight || y < 0) dy = -dy;
+
+dvd.style.left = x + "px";
+dvd.style.top = y + "px";
+
+requestAnimationFrame(moveCat);
+}
+
+moveCat();
+
+});
+
+</script>
+
+</body>
+</html>
