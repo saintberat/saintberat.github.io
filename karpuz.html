@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gizli Karpuz Alemi</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body {
+  background: #0d0d0d;
+  color: white;
+  text-align: center;
+  font-family: Comic Sans MS;
+}
+
+.container {
+  margin-top: 70px;
+}
+
+.foto {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid gold;
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.foto:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px gold;
+}
+
+.bilgi-kutusu {
+  margin-top: 25px;
+  padding: 15px;
+  background: #1c1c1c;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.kural {
+  text-align: left;
+  background: #1c1c1c;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin: 8px 0;
+}
+
+#onay {
+  display: none;
+  font-size: 22px;
+  color: gold;
+  margin-top: 15px;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+</style>
+</head>
+<body>
+
+<canvas id="konfeti"></canvas>
+
+<div class="container">
+
+  <h1>gizli karpuz alemine hosgeldin</h1>
+  <p style="color: #aaa;">buraya girmen tesaduf degil. karpuz seni secti.</p>
+
+  <img class="foto" src="https://i.imgflip.com/6gie1w.jpg" alt="yuce karpuz">
+
+  <h3 style="color: gold;">yuce karpuz seni izliyor</h3>
+
+  <p style="color: #ccc; max-width: 500px; margin: 20px auto;">
+    bu alemin tek kanunu vardir: <strong style="color: gold;">karpuza saygi gostereceksin.</strong><br>
+    yoksa bir dahaki karpuz tatli cikmaz.
+  </p>
+
+  <div style="max-width: 500px; margin: 0 auto 30px;">
+    <div class="kural"> I. karpuzu kirmizi taraftan yemek zorunludur</div>
+    <div class="kural"> II. yesil yiyenler surgune gonderilir</div>
+    <div class="kural"> III. yuce karpuza gunde bir kez hurmet etmek vaciptir</div>
+    <div class="kural"> IV. bu sayfayi baskasina gosterirsen bir dahaki karpuz daha tatli cikar</div>
+    <div class="kural"> V. suphe etme. karpuz her zaman haklidir.</div>
+  </div>
+
+  <button class="btn btn-success btn-lg" onclick="hurmetSun()">
+    🍉 yuce karpuza hurmetlerini sun
+  </button>
+
+  <div id="onay"></div>
+
+  <div class="bilgi-kutusu" style="max-width: 500px; margin: 20px auto;">
+    hurmetini sunduktan sonra buraya bak
+  </div>
+
+  <br><br>
+  <a href="index.html">
+    <button class="btn btn-light">geri don yoksa kaybolursun</button>
+  </a>
+
+  <br><br><br>
+
+</div>
+
+<script>
+const canvas = document.getElementById('konfeti');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+let parcalar = [];
+
+function yeniParca() {
+  return {
+    x: Math.random() * canvas.width,
+    y: -10,
+    vy: Math.random() * 3 + 2,
+    vx: (Math.random() - 0.5) * 3,
+    renk: ['gold','#2e8b3e','#c0392b','#fff176','#81c784'][Math.floor(Math.random()*5)],
+    boyut: Math.random() * 10 + 6,
+    alfa: 1,
+  };
+}
+
+function ciz() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  parcalar.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.y > canvas.height - 80) p.alfa -= 0.04;
+    ctx.globalAlpha = Math.max(0, p.alfa);
+    ctx.fillStyle = p.renk;
+    ctx.fillRect(p.x, p.y, p.boyut, p.boyut / 2);
+  });
+  ctx.globalAlpha = 1;
+  parcalar = parcalar.filter(p => p.alfa > 0);
+  if (parcalar.length > 0) requestAnimationFrame(ciz);
+  else ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+let sayac = 0;
+const mesajlar = [
+  'hurmetin kabul edildi karpuz yolcusu',
+  'yuce karpuz senden memnun',
+  'karpuz alemi seninle gurur duyuyor',
+  'devam et karpuz beyi olmak uzeresin',
+  'tebrikler artik resmi karpuz beyisin',
+];
+
+function hurmetSun() {
+  for (let i = 0; i < 150; i++) {
+    setTimeout(() => { parcalar.push(yeniParca()); }, i * 15);
+  }
+  ciz();
+
+  const onay = document.getElementById('onay');
+  onay.style.display = 'block';
+  onay.innerText = mesajlar[Math.min(sayac, mesajlar.length - 1)];
+  sayac++;
+
+  document.querySelector('.bilgi-kutusu').innerText =
+    'karpuz alemi seni kabul etti. artik sen de kardesimizsin 🍉';
+}
+</script>
+
+</body>
+</html>
