@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ne yaptin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #000;
+  color: white;
+  text-align: center;
+  font-family: Comic Sans MS;
+  min-height: 100vh;
+  overflow: hidden;
+  background-image: url('https://i.pinimg.com/736x/2c/67/79/2c677963712ec651ac2ae1bb04b2514b.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 0;
+}
+
+#flash {
+  position: fixed;
+  inset: 0;
+  background: red;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.05s;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  margin-top: 80px;
+}
+
+h1 {
+  font-size: clamp(2rem, 8vw, 5rem);
+  color: red;
+  text-shadow: 0 0 20px red, 0 0 40px darkred;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+#gozler {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 40px auto;
+}
+
+.goz {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px red, 0 0 40px darkred;
+  animation: gozPuls 1s ease-in-out infinite;
+}
+
+.goz:nth-child(2) { animation-delay: 0.3s; }
+
+.pupil {
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 50%;
+  box-shadow: 0 0 10px darkred;
+}
+
+@keyframes gozPuls {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px red, 0 0 40px darkred; }
+  50% { transform: scale(1.1); box-shadow: 0 0 40px red, 0 0 80px darkred; }
+}
+
+@keyframes shake {
+  0%   { transform: translate(0,0) rotate(0deg); }
+  20%  { transform: translate(-8px, 8px) rotate(-2deg); }
+  40%  { transform: translate(8px, -8px) rotate(2deg); }
+  60%  { transform: translate(-8px, -8px) rotate(-2deg); }
+  80%  { transform: translate(8px, 8px) rotate(2deg); }
+  100% { transform: translate(0,0) rotate(0deg); }
+}
+
+.shake {
+  animation: shake 0.4s ease !important;
+}
+
+#mesaj {
+  font-size: 1.4rem;
+  color: #ff4444;
+  text-shadow: 0 0 10px red;
+  min-height: 40px;
+  margin: 20px auto;
+}
+
+#sayac {
+  font-size: 1rem;
+  color: #888;
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div id="overlay"></div>
+<div id="flash"></div>
+
+<div class="container">
+  <h1>NE YAPTIN</h1>
+  <p>gozlere neden tikladinki</p>
+  <p>simdi ne olacak bilmiyorum</p>
+
+  <div id="gozler">
+    <div class="goz" onclick="korkut()"><div class="pupil" id="p1"></div></div>
+    <div class="goz" onclick="korkut()"><div class="pupil" id="p2"></div></div>
+  </div>
+
+  <div id="mesaj">tiklamaya devam edersen sonuclari sen bilirsin</div>
+  <div id="sayac">tiklama sayisi: 0</div>
+
+  <br><br>
+  <a href="index.html">
+    <button class="btn btn-danger mt-3">buradan kac</button>
+  </a>
+</div>
+
+<script>
+// fare takibi
+document.addEventListener('mousemove', function(e) {
+  document.querySelectorAll('.goz').forEach(goz => {
+    const pupil = goz.querySelector('.pupil');
+    const rect = goz.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+    const r = 18;
+    pupil.style.transform = `translate(${Math.cos(angle)*r}px, ${Math.sin(angle)*r}px)`;
+  });
+});
+
+// korkutma
+const flash = document.getElementById('flash');
+const mesajlar = [
+  'tiklamaya devam edersen sonuclari sen bilirsin',
+  'dur dur dur ne yapiyorsun',
+  'DURR',
+  'seni uyardim',
+  'neden dinlemiyorsun',
+  'tamam artik gercekten kiziyorum',
+  'son uyarim bu',
+  'pismayacaksin dimi',
+  'TAMAM OLDU',
+  'artik sen bilirsin. kac buradan.',
+];
+
+let sayac = 0;
+
+function korkut() {
+  sayac++;
+  document.getElementById('sayac').innerText = 'tiklama sayisi: ' + sayac;
+
+  // kırmızı flash
+  flash.style.opacity = '0.85';
+  setTimeout(() => { flash.style.opacity = '0.5'; }, 80);
+  setTimeout(() => { flash.style.opacity = '0.85'; }, 160);
+  setTimeout(() => { flash.style.opacity = '0'; }, 350);
+
+  // shake
+  document.body.classList.remove('shake');
+  void document.body.offsetWidth;
+  document.body.classList.add('shake');
+  setTimeout(() => document.body.classList.remove('shake'), 400);
+
+  // mesaj
+  const m = document.getElementById('mesaj');
+  m.innerText = mesajlar[Math.min(sayac - 1, mesajlar.length - 1)];
+
+  // ekstra kaos 5. tiklamadan sonra
+  if (sayac >= 5) {
+    document.querySelector('h1').style.color = sayac % 2 === 0 ? 'red' : 'white';
+  }
+}
+</script>
+
+</body>
+</html>
